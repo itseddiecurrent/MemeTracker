@@ -1,5 +1,11 @@
 //Code from lab_ml
 #include "Graph.h"
+#include <map>
+#include <unordered_map>
+#include <string>
+
+using namespace std;
+
 
 
 const Vertex Graph::InvalidVertex = "_INVALIDVERTEX";
@@ -7,6 +13,7 @@ const int Graph::InvalidWeight = INT_MIN;
 const string Graph:: InvalidLabel = "_INVALIDLABEL";
 const Edge Graph::InvalidEdge = Edge(Graph::InvalidVertex, Graph::InvalidVertex, Graph::InvalidWeight, Graph::InvalidLabel);
 
+//Graph::Graph() {}
 Graph::Graph(bool weighted) : weighted(weighted),directed(false),random(Random(0))
 {
 }
@@ -498,4 +505,17 @@ void Graph::savePNG(string title) const
 
     string rmCommand = "rm -f " + filename + " 2> /dev/null";
     system(rmCommand.c_str());
+}
+
+void Graph::DFS(Vertex v) {
+    map<Vertex, bool> visited;
+    visited[v] = true;
+    unordered_map<Vertex, Edge> ajlist = adjacency_list[v];
+    
+    unordered_map<Vertex, Edge>::iterator it;
+    for (it = ajlist.begin(); it != ajlist.end(); ++it) {
+        if (!visited[(*it).first]) {
+            DFS((*it).first);
+        }
+    }
 }

@@ -3,6 +3,7 @@
 
 #include <list>
 #include <unordered_map>
+#include <map>
 #include <utility>
 #include <algorithm>
 #include <string>
@@ -39,6 +40,8 @@ using std::unordered_map;
 class Graph
 {
 public:
+
+    //Graph();
     /**
      * Constructor to create an empty graph.
      * @param weighted - specifies whether the graph is a weighted graph or
@@ -212,6 +215,8 @@ public:
 
     void clear();
 
+    virtual void DFS(Vertex v);
+
 
     const static Vertex InvalidVertex;
     const static Edge InvalidEdge;
@@ -226,6 +231,8 @@ private:
     Random random;
     int picNum;
     string picName;
+
+    //map<Vertex, bool> visited;
 
 
     /**

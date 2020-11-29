@@ -1,6 +1,7 @@
 #Refered from final project demo
-EXENAME = finalproj
-OBJS = readFromFile.o main.o
+EXENAME = finalProj
+
+OBJS = main.o finalProj.o
 
 CXX = clang++
 CXXFLAGS = $(CS225) -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic
@@ -24,6 +25,7 @@ endif
 
 .PHONY: all test clean output_msg
 
+
 all : $(EXENAME)
 
 output_msg: ; $(CLANG_VERSION_MSG)
@@ -34,11 +36,13 @@ $(EXENAME): output_msg $(OBJS)
 readFromFile.o: main.cpp readFromFile.cpp
 	$(CXX) $(CXXFLAGS) main.cpp readFromFile.cpp
 
-finalProj.o: main.cpp readFromFile.cpp finalProj.cpp
-	$(CXX) $(CXXFLAGS) main.cpp readFromFile.cpp finalProj.cpp
 
-test: output_msg tests.cpp readFromFile.cpp
-	$(LD) tests.cpp readFromFile.cpp $(LDFLAGS) -o test
+
+Graph.o: Graph.cpp 
+	$(CXX) $(CXXFLAGS) Graph.cpp 
+
+test: output_msg catchmain.cpp tests.cpp Graph.cpp finalProj.cpp readFromFile.cpp
+	$(LD) catchmain.cpp tests.cpp Graph.cpp finalProj.cpp readFromFile.cpp $(LDFLAGS) -o test
 
 clean:
 	-rm -f *.o $(EXENAME) test
