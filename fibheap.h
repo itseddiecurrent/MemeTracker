@@ -7,7 +7,14 @@ class FibonacciHeap {
         node* child;
         node* prev;
         node* next;
+        int degree;
     }
     void insert(Vertex v);
-    node* myNode; 
+    void Fibonacci_Link(node* p1, node* p2);
+
+    
+
+    private:
+    node* myNode;
+    int nodeCount; 
 };

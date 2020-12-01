@@ -4,7 +4,8 @@
 #include <vector>
 #include <stack>
 #include <queue>
-#include <list>
+#include <map>
+#include <cmath>
 #include "Graph.h"
 #include "edge.h"
 #include "fibheap.h"
@@ -26,16 +27,21 @@ void MemeTracker::DFS(Vertex v) {
     Graph & k = getGraph();
     k.DFS(v);
 }
-Graph & MemeTracker::PrimMST(Graph g, Vertex start) {
-    priority_queue<int, Vertex> prq;
-    
-    prq.push(make_pair<int, Vertex>(0, start));
+Graph & MemeTracker::PrimMST(Graph g, Vertex start){
+    FibonacciHeap fib;
+    fib.insert(start);
+    vector<Vertex> vers = g.getVertices();
     int size = g.getNumVertices();
-    vector<bool> added;
-    added.resize(size, false);
-    int mst_cost = 0;
-    Graph T;
-    while (!prq.empty()) {
-
+    map<Vertex, bool> added;
+    map<Vertex, int> distance;
+    //Initialization
+    for (Vertex vi : vers) {
+        added[vi] = false;
+        distance[vi] = (int)INFINITY;
+        fib.insert(vi);
     }
+    distance[start] = 0;
+
+    
+    
 }
