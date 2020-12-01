@@ -7,6 +7,7 @@ void FibonacciHeap::insert(Vertex v) {
     newnode->keyVertex = v;
     newnode->parent = nullptr;
     newnode->child = nullptr;
+    newnode->degree = 0;
     newnode->prev = newnode;
     newnode->next = newnode;
     if (myNode != nullptr) {
@@ -14,11 +15,13 @@ void FibonacciHeap::insert(Vertex v) {
         newnode->next = myNode;
         newnode->prev = myNode->prev;
         myNode->prev = newnode;
-        if (((string)newnode->keyVertex).length() < ((string)myNode->keyVertex).length) {
+        //Comparison operator that I have no idea how to implement. How tf do we sort priority on a string?
+        if ((string)newnode->keyVertex < (string)myNode->keyVertex) {
             myNode = newnode;
         }
     } else {
         myNode = newnode;
     }
+    nodeCount++;
 }
 
