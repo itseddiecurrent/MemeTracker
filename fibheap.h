@@ -10,8 +10,7 @@ class FibonacciHeap {
         int degree;
     }
     void insert(Vertex v);
-    void Fibonacci_Link(node* p1, node* p2);
-
+    void Fibonacci_Link(node* p2, node* p1);
     
 
     private:

@@ -25,7 +25,12 @@ void FibonacciHeap::insert(Vertex v) {
     nodeCount++;
 }
 
-void FibonacciHeap::Fibonacci_Link(node* p1, node* p2) {
+void FibonacciHeap::Fibonacci_Link(node* p2, node* p1) {
+    (p2->prev)->next = p2->next;
+    (p2->next)->prev = p2->prev;
+    if (p1->right == p1) {
+        myNode = p1;
+    }
     
 }
 
