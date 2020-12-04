@@ -15,7 +15,7 @@ using namespace std;
 
 int main() {
     //Smaller case
-    Graph memeGraph(true, true);
+    Graph memeGraph(true, false);
     vector<string> lines = file_to_vector("memeset.txt");
     vector<string> copy = lines;
     for (string line: lines) {
@@ -26,6 +26,8 @@ int main() {
         }
         //Search for linked directories
         if (line.at(0) == 'L') {
+            //Check in any of the L line happen to be one of our vertices, and if that is the case
+            //we are inserting an edge between the parent P of the L and the L itself. 
             string copyLine = line;
             line.erase(0,1);
             size_t pindex;
