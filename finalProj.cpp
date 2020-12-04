@@ -41,7 +41,7 @@ Graph MemeTracker::PrimMST(Graph g, Vertex start){
     for (Vertex v : g.getVertices()) {
         q.push(v);
     }
-    Graph T(true, true);
+    Graph T(true, false);
     while(!q.empty()) {
         Vertex m = q.top();
         T.insertVertex(m);
