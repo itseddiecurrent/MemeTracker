@@ -29,25 +29,33 @@ void MemeTracker::DFS(Vertex v) {
 }
 Graph MemeTracker::PrimMST(Graph g, Vertex start){
     //FibonacciHeap fib;
-    std::priority_queue<Vertex> q;
-    q.push(start);
-    //fib.insert(start);
-    vector<Vertex> vers = g.getVertices();
-    int size = g.getNumVertices();
-    map<Vertex, bool> added;
-    map<Vertex, int> distance;
-    //Initialization
-    for (Vertex vi : vers) {
-        added[vi] = false;
-        distance[vi] = (int)INFINITY;
-        //fib.insert(vi);
-        q.push(start);
+    map<Vertex, int> dist;
+    map<Vertex, Vertex> previous;
+    for (Vertex v : g.getVertices()) {
+        dist[v] = (int)INFINITY;
+        previous[v] = (Vertex)NULL;
     }
-    distance[start] = 0;
+    dist[start] = 0;
 
-
-    
-    return g;
+    std::priority_queue<Vertex> q;
+    for (Vertex v : g.getVertices()) {
+        q.push(v);
+    }
+    Graph T(true, true);
+    while(!q.empty()) {
+        Vertex m = q.top();
+        T.insertVertex(m);
+        T.insertEdge(m, previous[m]);
+        for (Vertex v : g.getAdjacent(m)) {
+            if (!T.vertexExists(v)) {
+                if (g.getEdgeWeight(m,v) < dist[v]) {
+                    dist[v] = g.getEdgeWeight(m,v);
+                    previous[v] = m;
+                }
+            }
+        }
+    }
+    return T;
     
 
 }

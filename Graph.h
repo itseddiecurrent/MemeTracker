@@ -151,6 +151,8 @@ public:
      */
     void insertVertex(Vertex v);
 
+    //bool hasVertex(Vertex v);
+
     /**
      * Removes a given vertex from the graph.
      * @param v - the vertex to remove
