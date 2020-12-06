@@ -56,6 +56,30 @@ Graph MemeTracker::PrimMST(Graph g, Vertex start){
         }
     }
     return T;
-    
+}
 
+
+bool MemeTracker::DLS(Vertex source, Vertex target, int limit) {
+    if (source == target) {
+        return true;
+    }
+    if (limit <= 0) {
+        return false;
+    }
+    Graph & k = getGraph();
+    for (auto i = k.getAdjacent(source).begin(); i != k.getAdjacent(source).end(); i++) {
+        if (DLS(*i, target, limit-1) == true) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool MemeTracker::IDDFS(Vertex source, Vertex target, int max_depth) {
+    for (int i = 0; i <= max_depth; i++) {
+        if (DLS(source, target, i) == true) {
+            return true;
+        }
+    }
+    return false;
 }
