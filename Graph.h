@@ -217,7 +217,15 @@ public:
 
     void clear();
 
+
     virtual void DFS(Vertex v);
+
+    vector<Vertex> DFSlist(Vertex v);
+
+    bool DLS(Vertex source, Vertex target, int limit);
+    bool IDDFS(Vertex source, Vertex target, int max_depth);
+
+    void PrimMST1(Vertex start);
 
 
     const static Vertex InvalidVertex;

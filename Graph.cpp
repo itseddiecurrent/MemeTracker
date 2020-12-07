@@ -3,6 +3,8 @@
 #include <map>
 #include <unordered_map>
 #include <string>
+#include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -508,14 +510,135 @@ void Graph::savePNG(string title) const
 }
 
 void Graph::DFS(Vertex v) {
+    vector<Vertex> output;
     map<Vertex, bool> visited;
     visited[v] = true;
+    //Push v into vector.
+    //output.push_back(v);
+
     unordered_map<Vertex, Edge> ajlist = adjacency_list[v];
     
     unordered_map<Vertex, Edge>::iterator it;
     for (it = ajlist.begin(); it != ajlist.end(); ++it) {
         if (!visited[(*it).first]) {
+            //output.push_back((*it).first);
             DFS((*it).first);
         }
     }
 }
+
+vector<Vertex> Graph::DFSlist(Vertex v) {
+    map<Vertex, bool> visited; 
+    for (Vertex k : getVertices()) {
+        visited[k] = false;
+    }
+  
+    // Create a stack for DFS 
+    stack<Vertex> stack; 
+  
+    // Push the current source node. 
+    stack.push(v); 
+
+    vector<Vertex> out;
+
+  
+    while (!stack.empty()) 
+    { 
+        // Pop a vertex from stack and print it 
+        v = stack.top(); 
+        stack.pop(); 
+  
+        // Stack may contain same vertex twice. So 
+        // we need to print the popped item only 
+        // if it is not visited. 
+        if (!visited[v]) 
+        { 
+            out.push_back(v);
+            visited[v] = true; 
+        } 
+  
+        // Get all adjacent vertices of the popped vertex s 
+        // If a adjacent has not been visited, then push it 
+        // to the stack. 
+        for (auto i = adjacency_list[v].begin(); i != adjacency_list[v].end(); ++i) {
+            if (!visited[(*i).first]) {
+                stack.push((*i).first); 
+                out.push_back((*i).first);
+            }
+        }
+
+    } 
+    return out;
+}
+
+bool Graph::DLS(Vertex source, Vertex target, int limit) {
+    if (source == target) {
+        return true;
+    }
+    if (limit <= 0) {
+        return false;
+    }
+   // Graph & k = getGraph();
+    for (Vertex i : getAdjacent(source)) {
+        if (DLS(i, target, limit-1) == true) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Graph::IDDFS(Vertex source, Vertex target, int max_depth) {
+    for (int i = 0; i <= max_depth; i++) {
+        if (DLS(source, target, i) == true) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Graph::PrimMST1(Vertex start){
+    //FibonacciHeap fib;
+    map<Vertex, int> dist;
+    map<Vertex, Vertex> previous;
+    for (Vertex v : getVertices()) {
+        dist[v] = (int)INFINITY;
+        previous[v] = (Vertex)NULL;
+    }
+    cout << "A" << endl;
+    dist[start] = 0;
+
+    std::priority_queue<Vertex> q;
+    for (Vertex v : getVertices()) {
+        q.push(v);
+    }
+    cout << "B" << endl;
+    Graph T(true, false);
+    while(!q.empty()) {
+        Vertex m = q.top();
+        cout << "C" << endl;
+        T.insertVertex(m);
+        cout << "D" << endl;
+        T.insertEdge(m, previous[m]);
+        cout << "E" << endl;
+        for (Vertex v : getAdjacent(m)) {
+            cout << "F" << endl;
+            if (!T.vertexExists(v)) {
+                cout << "G" << endl;
+                if (getEdgeWeight(m,v) < dist[v]) {
+                    cout << "H" << endl;
+                    dist[v] = getEdgeWeight(m,v);
+                    cout << "I" << endl;
+                    previous[v] = m;
+                    cout << "J" << endl;
+                }
+            }
+        }
+    }
+    cout << "K" << endl;
+    *this = T;
+}
+
+
+
+
+

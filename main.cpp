@@ -28,6 +28,7 @@ int main() {
         if (line.at(0) == 'L') {
             //Check in any of the L line happen to be one of our vertices, and if that is the case
             //we are inserting an edge between the parent P of the L and the L itself. 
+            //P       http://
             string copyLine = line;
             line.erase(0,1);
             size_t pindex;
@@ -46,8 +47,21 @@ int main() {
         }
     }
 
+    for (Edge e: memeGraph.getEdges()) {
+        for (size_t i = 0; i < copy.size(); i++) {
+            string pHead = "P";
+            
+            string newstring = pHead.append((string)e.source);
+            
+
+        }
+    }
+
+
+
+
     //Bigger case
-    Graph memeGraph1(true, true);
+    Graph memeGraph1(true, false);
     vector<string> lines1 = file_to_vector("400000line.txt");
     vector<string> copy1 = lines1;
     for (string line: lines1) {
@@ -75,6 +89,9 @@ int main() {
             }
         }
     }
+
+
+   
 
     return 1;
 }

@@ -8,10 +8,10 @@
 
 using namespace std;
 
-class MemeTracker : public Graph {
+class MemeTracker {
     public:
-    MemeTracker(Graph g);
-    
+    MemeTracker();
+    MemeTracker(Graph f);
     void DFS(Vertex v);
     Graph & getGraph();
     Graph PrimMST(Graph g, Vertex start);
@@ -20,6 +20,6 @@ class MemeTracker : public Graph {
 
     private:
     map<Vertex, bool> visited;
-    Graph _graph;
+    Graph _graph = new Graph(true, false);
 
 };

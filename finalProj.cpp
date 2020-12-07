@@ -11,14 +11,13 @@
 //#include "fibheap.h"
 using namespace std;
 
-/*MemeTracker::MemeTracker() {
-    
-    vector<Vertex> vertices = g.getVertices();
-    for (Vertex v : vertices) {
-        visited.insert(make_pair<Vertex, bool>(v, false));
-    }
-}*/
+MemeTracker::MemeTracker() {
+    //_graph = new Graph(true, false);
+}
 
+MemeTracker::MemeTracker(Graph f) {
+    _graph = f;
+}
 
 Graph & MemeTracker::getGraph(){
     return _graph;
