@@ -5,6 +5,9 @@
 #include <string>
 #include <stack>
 #include <queue>
+#include <algorithm>
+#include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -597,45 +600,94 @@ bool Graph::IDDFS(Vertex source, Vertex target, int max_depth) {
 }
 
 void Graph::PrimMST1(Vertex start){
-    //FibonacciHeap fib;
-    map<Vertex, int> dist;
-    map<Vertex, Vertex> previous;
-    for (Vertex v : getVertices()) {
-        dist[v] = (int)INFINITY;
-        previous[v] = (Vertex)NULL;
-    }
-    cout << "A" << endl;
-    dist[start] = 0;
+    
+   priority_queue<pair<int, Vertex>, vector<pair<int, Vertex>>, greater<pair<int, Vertex>>> pq; 
+  
+     // Taking vertex 0 as source 
+  
+    // Create a vector for keys and initialize all 
+    // keys as infinite (INF) 
+    //int V = getNumVertices(); 
 
-    std::priority_queue<Vertex> q;
-    for (Vertex v : getVertices()) {
-        q.push(v);
-    }
-    cout << "B" << endl;
-    Graph T(true, false);
-    while(!q.empty()) {
-        Vertex m = q.top();
-        cout << "C" << endl;
-        T.insertVertex(m);
-        cout << "D" << endl;
-        T.insertEdge(m, previous[m]);
-        cout << "E" << endl;
-        for (Vertex v : getAdjacent(m)) {
-            cout << "F" << endl;
-            if (!T.vertexExists(v)) {
-                cout << "G" << endl;
-                if (getEdgeWeight(m,v) < dist[v]) {
-                    cout << "H" << endl;
-                    dist[v] = getEdgeWeight(m,v);
-                    cout << "I" << endl;
-                    previous[v] = m;
-                    cout << "J" << endl;
-                }
+    //cout << "Checkpt 1" << endl;
+    map<Vertex,int> key;
+    for (Vertex k : getVertices()) {
+        key[k] = (int)INFINITY;
+    } 
+    // To store parent array which in turn store MST 
+    map<Vertex,Vertex> parent;
+    for (Vertex k : getVertices()) {
+        parent[k] = "";
+    } 
+    // To keep track of vertices included in MST 
+    map<Vertex, bool> inMST; 
+    for (Vertex k: getVertices()) {
+        inMST[k] = false;
+    } 
+    // Insert source itself in priority queue and initialize 
+    // its key as 0. 
+    pq.push(make_pair(0, start)); 
+    key[start] = 0; 
+    /* Looping till priority queue becomes empty */
+    while (!pq.empty()) 
+    { 
+        // The first vertex in pair is the minimum key 
+        // vertex, extract it from priority queue. 
+        // vertex label is stored in second of pair (it 
+        // has to be done this way to keep the vertices 
+        // sorted key (key must be first item 
+        // in pair) 
+        Vertex u = pq.top().second; 
+        pq.pop(); 
+  
+        inMST[u] = true;  // Include vertex in MST 
+       // Vertex u = start;
+  
+        // 'i' is used to get all adjacent vertices of a vertex 
+       // list< pair<int, int> >::iterator i; 
+        for (Vertex v : getAdjacent(u)) 
+        { 
+            // Get vertex label and weight of current adjacent 
+            // of u. 
+           // int v = (*i).first; 
+           //inMST[u] = true;
+            //int weight = getEdgeWeight(u, v); 
+            //int count = 0;
+            //  If v is not in MST and weight of (u,v) is smaller 
+            // than current key of v 
+            if (inMST[v] == false && key[v] > getEdgeWeight(u, v)) 
+            { 
+                // Updating key of v 
+                key[v] = getEdgeWeight(u, v); 
+                pq.push(make_pair(key[v], v)); 
+                parent[v] = u; 
+                //count++;
+                
+            
+            
+            //else {
+                Vertex temp = u;
+                //removeEdge(u, v);
+            //}
             }
-        }
+            
+        } 
+    } 
+
+    Graph T(true, false);
+    for (Vertex v : getVertices()) {
+        T.insertVertex(v);
     }
-    cout << "K" << endl;
+    for (pair<Vertex, Vertex> it : parent) {
+        //if (edgeExists(it.first, it.second)) {
+            T.insertEdge(it.first,it.second);
+            if (this->edgeExists(it.first, it.second)) {
+            T.setEdgeWeight(it.first, it.second, getEdgeWeight(it.first, it.second));
+            }
+        //}
+    }
     *this = T;
+  
 }
 
 

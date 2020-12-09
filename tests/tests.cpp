@@ -53,6 +53,13 @@ TEST_CASE("Graph::DFS works") {
 
 }
 
+TEST_CASE("Basic Prim test") {
+    Graph g(true, false);
+    Vertex one = "1";
+    g.insertVertex(one);
+    g.PrimMST1(one);
+}
+
 TEST_CASE("Prim MST test") {
     
     Graph g1(true, false);
@@ -82,19 +89,19 @@ TEST_CASE("Prim MST test") {
     g1.setEdgeWeight(b, c, 4);
     g1.insertEdge(c,d);
     g1.setEdgeWeight(c, d, 7);
-    g1.insertEdge(a,e);
-    g1.setEdgeWeight(a, e, 1);
+    g1.insertEdge(e, a);
+    g1.setEdgeWeight(e, a, 1);
     g1.insertEdge(a,f);
     g1.setEdgeWeight(a, f, 3);
     g1.insertEdge(a,c);
     g1.setEdgeWeight(a, c, 5);
-    //cout << "Checkpoint 1" << endl;
+    cout << "Checkpoint 1" << endl;
     Graph k(true, false);
     MemeTracker mt(g1);
-    //cout << "Checkpoint 2" << endl;
+    cout << "Checkpoint 2" << endl;
     //Graph testGraph = mt.PrimMST(g1, e);
     g1.PrimMST1(e);
-    //cout << "Checkpoint 3" << endl;
+    cout << "Checkpoint 3" << endl;
 
     // REQUIRE(testGraph.vertexExists(a));
     // REQUIRE(testGraph.vertexExists(b));
@@ -109,6 +116,15 @@ TEST_CASE("Prim MST test") {
     REQUIRE(g1.vertexExists(d));
     REQUIRE(g1.vertexExists(e));
     REQUIRE(g1.vertexExists(f));
+
+    REQUIRE(g1.edgeExists(b, a));
+    REQUIRE(g1.edgeExists(b, c));
+    REQUIRE(g1.edgeExists(c, d));
+    REQUIRE(g1.edgeExists(e, a));
+    REQUIRE(g1.edgeExists(a, f));
+    REQUIRE(g1.edgeExists(a, c) == false);
+    
+
 
 
 
