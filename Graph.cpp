@@ -511,19 +511,16 @@ void Graph::savePNG(string title) const
     system(rmCommand.c_str());
 }
 
-void Graph::DFS(Vertex v) {
-    vector<Vertex> output;
-    map<Vertex, bool> visited;
+vector<Vertex> Graph::DFS(Vertex v) {
     visited[v] = true;
     //Push v into vector.
-    //output.push_back(v);
-    unordered_map<Vertex, Edge> ajlist = adjacency_list[v];
-    unordered_map<Vertex, Edge>::iterator it;
-    for (it = ajlist.begin(); it != ajlist.end(); ++it) {
-        if (!visited[(*it).first]) {
-            DFS((*it).first);
+    output.push_back(v);
+    for (Vertex i : getAdjacent(v)) {
+        if (visited[i] == false) {
+            DFS(i);
         }
     }
+    return output;
 }
 
 vector<Vertex> Graph::DFSlist(Vertex v) {

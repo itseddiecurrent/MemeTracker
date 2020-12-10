@@ -218,7 +218,7 @@ public:
     void clear();
 
 
-    virtual void DFS(Vertex v);
+    vector<Vertex> DFS(Vertex v);
 
     vector<Vertex> DFSlist(Vertex v);
 
@@ -232,6 +232,8 @@ public:
     const static Edge InvalidEdge;
     const static int InvalidWeight;
     const static string InvalidLabel;
+    vector<Vertex> output;
+    std::map<Vertex, bool> visited;
 
 private:
     mutable unordered_map<Vertex, unordered_map<Vertex, Edge>> adjacency_list;

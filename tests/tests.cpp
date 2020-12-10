@@ -9,7 +9,6 @@
 TEST_CASE("Graph::getNumVertices returns the correct number of vertices") {
     Graph g(true, false);
     Vertex v1 = (Vertex)"1";
-
     g.insertVertex(v1);
     g.insertVertex("2");
     REQUIRE(g.getNumVertices() == 2);
@@ -23,7 +22,7 @@ TEST_CASE("Iterative Deepening DFS Test") {
         a  -    c
        / \        \
       e   f        d
-      
+
     */
     Vertex a = "a";
     Vertex b = "b";
@@ -286,6 +285,41 @@ TEST_CASE("PrimMST + Iterative Deepening Test") {
 
     REQUIRE(g1.IDDFS(c, f, 3) == true);
     REQUIRE(g1.IDDFS(c, f, 1) == false);
+}
+
+TEST_CASE("DFS Traversal Test") {
+Graph g1(true, false);
+    /*
+            b
+         /     \
+        a       c
+       / \        \
+      e   f        d
+
+    */
+    Vertex a = "a";
+    Vertex b = "b";
+    Vertex c = "c";
+    Vertex d = "d";
+    Vertex e = "e";
+    Vertex f = "f";
+    g1.insertVertex(a);
+    g1.insertVertex(b);
+    g1.insertVertex(c);
+    g1.insertVertex(d);
+    g1.insertVertex(e);
+    g1.insertVertex(f);
+
+    g1.insertEdge(b,a);
+    g1.insertEdge(b,c);
+    g1.insertEdge(c,d);
+    g1.insertEdge(a,e);
+    g1.insertEdge(a,f);
+
+    vector<Vertex> correctTraversal{b,c,d,a,f,e};
+    vector<Vertex> resultTraversal = g1.DFS(b);
+    REQUIRE(g1.getNumVertices() == 6);
+    REQUIRE(resultTraversal == correctTraversal);
 }
 
 
