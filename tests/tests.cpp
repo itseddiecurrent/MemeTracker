@@ -22,7 +22,8 @@ TEST_CASE("Iterative Deepening DFS Test") {
          /     \
         a  -    c
        / \        \
-       e  f         d
+      e   f        d
+      
     */
     Vertex a = "a";
     Vertex b = "b";

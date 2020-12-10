@@ -18,7 +18,6 @@ const int Graph::InvalidWeight = INT_MIN;
 const string Graph:: InvalidLabel = "_INVALIDLABEL";
 const Edge Graph::InvalidEdge = Edge(Graph::InvalidVertex, Graph::InvalidVertex, Graph::InvalidWeight, Graph::InvalidLabel);
 
-//Graph::Graph() {}
 Graph::Graph(bool weighted) : weighted(weighted),directed(false),random(Random(0))
 {
 }
@@ -518,13 +517,10 @@ void Graph::DFS(Vertex v) {
     visited[v] = true;
     //Push v into vector.
     //output.push_back(v);
-
     unordered_map<Vertex, Edge> ajlist = adjacency_list[v];
-    
     unordered_map<Vertex, Edge>::iterator it;
     for (it = ajlist.begin(); it != ajlist.end(); ++it) {
         if (!visited[(*it).first]) {
-            //output.push_back((*it).first);
             DFS((*it).first);
         }
     }
@@ -535,22 +531,16 @@ vector<Vertex> Graph::DFSlist(Vertex v) {
     for (Vertex k : getVertices()) {
         visited[k] = false;
     }
-  
     // Create a stack for DFS 
     stack<Vertex> stack; 
-  
     // Push the current source node. 
     stack.push(v); 
-
     vector<Vertex> out;
-
-  
     while (!stack.empty()) 
     { 
         // Pop a vertex from stack and print it 
         v = stack.top(); 
         stack.pop(); 
-  
         // Stack may contain same vertex twice. So 
         // we need to print the popped item only 
         // if it is not visited. 
@@ -559,7 +549,6 @@ vector<Vertex> Graph::DFSlist(Vertex v) {
             out.push_back(v);
             visited[v] = true; 
         } 
-  
         // Get all adjacent vertices of the popped vertex s 
         // If a adjacent has not been visited, then push it 
         // to the stack. 
@@ -581,7 +570,6 @@ bool Graph::DLS(Vertex source, Vertex target, int limit) {
     if (limit <= 0) {
         return false;
     }
-   // Graph & k = getGraph();
     for (Vertex i : getAdjacent(source)) {
         if (DLS(i, target, limit-1) == true) {
             return true;
@@ -603,13 +591,9 @@ void Graph::PrimMST1(Vertex start){
     
    priority_queue<pair<int, Vertex>, vector<pair<int, Vertex>>, greater<pair<int, Vertex>>> pq; 
   
-     // Taking vertex 0 as source 
-  
+    // Taking vertex 0 as source 
     // Create a vector for keys and initialize all 
     // keys as infinite (INF) 
-    //int V = getNumVertices(); 
-
-    //cout << "Checkpt 1" << endl;
     map<Vertex,int> key;
     for (Vertex k : getVertices()) {
         key[k] = (int)INFINITY;
@@ -639,20 +623,12 @@ void Graph::PrimMST1(Vertex start){
         // in pair) 
         Vertex u = pq.top().second; 
         pq.pop(); 
-  
         inMST[u] = true;  // Include vertex in MST 
-       // Vertex u = start;
-  
         // 'i' is used to get all adjacent vertices of a vertex 
-       // list< pair<int, int> >::iterator i; 
         for (Vertex v : getAdjacent(u)) 
         { 
             // Get vertex label and weight of current adjacent 
             // of u. 
-           // int v = (*i).first; 
-           //inMST[u] = true;
-            //int weight = getEdgeWeight(u, v); 
-            //int count = 0;
             //  If v is not in MST and weight of (u,v) is smaller 
             // than current key of v 
             if (inMST[v] == false && key[v] > getEdgeWeight(u, v)) 
@@ -661,16 +637,8 @@ void Graph::PrimMST1(Vertex start){
                 key[v] = getEdgeWeight(u, v); 
                 pq.push(make_pair(key[v], v)); 
                 parent[v] = u; 
-                //count++;
-                
-            
-            
-            //else {
                 Vertex temp = u;
-                //removeEdge(u, v);
-            //}
             }
-            
         } 
     } 
 
@@ -679,12 +647,10 @@ void Graph::PrimMST1(Vertex start){
         T.insertVertex(v);
     }
     for (pair<Vertex, Vertex> it : parent) {
-        //if (edgeExists(it.first, it.second)) {
             T.insertEdge(it.first,it.second);
             if (this->edgeExists(it.first, it.second)) {
             T.setEdgeWeight(it.first, it.second, getEdgeWeight(it.first, it.second));
             }
-        //}
     }
     *this = T;
   
