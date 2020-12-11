@@ -1,4 +1,4 @@
-# qianfut2-jshao22-jwacha4
+# qianfut2-jshao22-jwacha4: MemeTracker
 
 ## Team Members: Edward Tang, Jack Shao, John Wachala
 
