@@ -511,6 +511,10 @@ void Graph::savePNG(string title) const
     system(rmCommand.c_str());
 }
 
+
+/*  The recursive Depth First Search on Graph
+    @param v The starting vertex for the DFS
+*/
 vector<Vertex> Graph::DFS(Vertex v) {
     visited[v] = true;
     //Push v into vector.
@@ -523,43 +527,15 @@ vector<Vertex> Graph::DFS(Vertex v) {
     return output;
 }
 
-vector<Vertex> Graph::DFSlist(Vertex v) {
-    map<Vertex, bool> visited; 
-    for (Vertex k : getVertices()) {
-        visited[k] = false;
-    }
-    // Create a stack for DFS 
-    stack<Vertex> stack; 
-    // Push the current source node. 
-    stack.push(v); 
-    vector<Vertex> out;
-    while (!stack.empty()) 
-    { 
-        // Pop a vertex from stack and print it 
-        v = stack.top(); 
-        stack.pop(); 
-        // Stack may contain same vertex twice. So 
-        // we need to print the popped item only 
-        // if it is not visited. 
-        if (!visited[v]) 
-        { 
-            out.push_back(v);
-            visited[v] = true; 
-        } 
-        // Get all adjacent vertices of the popped vertex s 
-        // If a adjacent has not been visited, then push it 
-        // to the stack. 
-        for (auto i = adjacency_list[v].begin(); i != adjacency_list[v].end(); ++i) {
-            if (!visited[(*i).first]) {
-                stack.push((*i).first); 
-                out.push_back((*i).first);
-            }
-        }
+/* Recursive function for Iterative Deepening Depth First search, A Depth Limited 
+    Search from a given source to a given target within a given limit
+    @param 
+    source: the source Vertex for the search
+    target: the target Vertex for the search
+    limit: the depth limit 
+    @return: true if the target is reached within the limit, false otherwise
 
-    } 
-    return out;
-}
-
+*/
 bool Graph::DLS(Vertex source, Vertex target, int limit) {
     if (source == target) {
         return true;
@@ -575,6 +551,14 @@ bool Graph::DLS(Vertex source, Vertex target, int limit) {
     return false;
 }
 
+/* Iterative Deepening Depth First Search, returns true if the target is reached.
+    @param 
+    source: the source Vertex for the search
+    target: the target Vertex for the search
+    limit: the depth limit 
+    @return: true if the target is reachable within the limit, false otherwise
+
+*/
 bool Graph::IDDFS(Vertex source, Vertex target, int max_depth) {
     for (int i = 0; i <= max_depth; i++) {
         if (DLS(source, target, i) == true) {
@@ -584,6 +568,14 @@ bool Graph::IDDFS(Vertex source, Vertex target, int max_depth) {
     return false;
 }
 
+/*Prim's (also known as Jarník's) algorithm is a greedy algorithm 
+that finds a minimum spanning tree for a weighted undirected graph. 
+This means it finds a subset of the edges that forms a tree that includes 
+every vertex, where the total weight of all the edges in the tree is minimized. 
+
+@param start: the starting Vertex as the source node of the MST.
+The function removes edges that not in the Minimum Spanning Tree from the graph.
+*/
 void Graph::PrimMST1(Vertex start){
     
    priority_queue<pair<int, Vertex>, vector<pair<int, Vertex>>, greater<pair<int, Vertex>>> pq; 

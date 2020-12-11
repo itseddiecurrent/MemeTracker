@@ -220,7 +220,7 @@ public:
 
     vector<Vertex> DFS(Vertex v);
 
-    vector<Vertex> DFSlist(Vertex v);
+   
 
     bool DLS(Vertex source, Vertex target, int limit);
     bool IDDFS(Vertex source, Vertex target, int max_depth);
